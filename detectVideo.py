@@ -1,8 +1,7 @@
-import os
-import cv2
 import mediapipe as mp
 from mediapipe.tasks.python import vision
-from imutils.video import FileVideoStream, VideoStream
+import cv2
+from imutils.video import FileVideoStream # import VideoStream for webcam
 import time
 
 COLOR = (255, 0, 0)
@@ -45,9 +44,7 @@ frame_number = 0
 start_time_video = start_time_frame = time.time()
 
 with ObjectDetector.create_from_options(options) as detector: 
-    #while cap.isOpened():
     while fvs.more():
-        #success, frame = cap.read()
         frame = fvs.read()
 
         if frame is not None:

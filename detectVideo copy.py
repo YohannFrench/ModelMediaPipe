@@ -1,6 +1,6 @@
-import cv2
 import mediapipe as mp
 from mediapipe.tasks.python import vision
+import cv2
 import time
 
 COLOR = (255, 0, 0)
@@ -36,6 +36,7 @@ options = ObjectDetectorOptions(
 cap = cv2.VideoCapture("videos/video_360p.mp4")
 cap_fps = cap.get(cv2.CAP_PROP_FPS)
 print(cap_fps)
+#delay = int(1000 / cap_fps)
 
 frame_number = 0
 start_time_video = start_time_frame = time.time()
@@ -67,7 +68,7 @@ with ObjectDetector.create_from_options(options) as detector:
             cv2.imshow("Video", annotated_frame)
             
             # Check if the user has pressed the `q` key, if yes then close the program. 
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            if cv2.waitKey(1) & 0xFF == ord('q'): # cv2.waitkey(delay)
                 break
         else:
             break
