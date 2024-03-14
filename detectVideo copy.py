@@ -16,8 +16,8 @@ def visualize(frame, detection_result):
 
         category = detection.categories[0]
         category_name = category.category_name
-        score = round(category.score, 2) 
-        text = f"{category_name}({str(score)})"
+        score = round(category.score, 2) * 100 
+        text = f"{category_name}({str(score)}%)"
         text_location = (bbox.origin_x + MARGIN, bbox.origin_y - MARGIN)
         cv2.putText(frame, text, text_location, cv2.FONT_HERSHEY_PLAIN, FONT_SIZE, COLOR, FONT_THICKNESS)
 
