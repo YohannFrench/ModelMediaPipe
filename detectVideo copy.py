@@ -5,7 +5,6 @@ import time
 
 COLOR = (255, 0, 0)
 MARGIN = 10
-ROW_SIZE = 10
 FONT_SIZE = 1
 FONT_THICKNESS = 2
 
@@ -23,8 +22,8 @@ def visualize(frame, detection_result):
 
     return frame
 
-BaseOptions = mp.tasks.BaseOptions
 ObjectDetector = vision.ObjectDetector
+BaseOptions = mp.tasks.BaseOptions
 ObjectDetectorOptions = vision.ObjectDetectorOptions
 VisionRunningMode = vision.RunningMode
 
