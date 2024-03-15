@@ -8,10 +8,10 @@ train_dataset_path = "dataset_persons/train"
 validation_dataset_path = "dataset_persons/valid"
 test_dataset_path = "dataset_persons/test"
 
-#with open(os.path.join(train_dataset_path, "labels.json"), "r") as f:
-#    labels_json = json.load(f)
-#for category_item in labels_json["categories"]:
-#    print(f"{category_item['id']}: {category_item['name']}")
+with open(os.path.join(train_dataset_path, "labels.json"), "r") as f:
+    labels_json = json.load(f)
+for category_item in labels_json["categories"]:
+    print(f"{category_item['id']}: {category_item['name']}")
 
 train_data = object_detector.Dataset.from_coco_folder(train_dataset_path, cache_dir="/tmp/od_data/train")
 validation_data = object_detector.Dataset.from_coco_folder(validation_dataset_path, cache_dir="/tmp/od_data/validation")
@@ -19,6 +19,7 @@ test_data = object_detector.Dataset.from_coco_folder(test_dataset_path, cache_di
 
 print("train_data size: ", train_data.size)
 print("validation_data size: ", validation_data.size)
+print("test_data_size: ", test_data.size)
 
 spec = object_detector.SupportedModels.MOBILENET_V2
 hparams = object_detector.HParams(epochs=2, batch_size=32, export_dir='exported_model')
