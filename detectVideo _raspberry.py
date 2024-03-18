@@ -4,9 +4,9 @@ import cv2
 import time
 
 COLOR = (255, 0, 0)
-MARGIN = 10
+MARGIN = 5
 FONT_SIZE = 1
-FONT_THICKNESS = 2
+FONT_THICKNESS = 1
 
 def visualize(frame, detection_result):
     for detection in detection_result.detections:
@@ -17,25 +17,20 @@ def visualize(frame, detection_result):
         category_name = category.category_name
         score = round(category.score, 2) * 100 
         text = f"{category_name}({str(score)}%)"
-        text_location = (bbox.origin_x + MARGIN, bbox.origin_y - MARGIN)
+        text_location = (bbox.origin_x, bbox.origin_y - MARGIN)
         cv2.putText(frame, text, text_location, cv2.FONT_HERSHEY_PLAIN, FONT_SIZE, COLOR, FONT_THICKNESS)
 
     return frame
 
 ObjectDetector = vision.ObjectDetector
-BaseOptions = mp.tasks.BaseOptions
-ObjectDetectorOptions = vision.ObjectDetectorOptions
-VisionRunningMode = vision.RunningMode
 
-options = ObjectDetectorOptions(
-    base_options=BaseOptions(model_asset_path='exported_model/model_int8.tflite'),
+options = vision.ObjectDetectorOptions(
+    base_options=mp.tasks.BaseOptions(model_asset_path='exported_model/model_int8.tflite'),
     score_threshold=0.25,
-    running_mode=VisionRunningMode.VIDEO)
+    running_mode=vision.RunningMode.VIDEO) # VisionRunningMode.LIVE_STREAM for a webcam
 
-cap = cv2.VideoCapture("videos/video_360p.mp4")
+cap = cv2.VideoCapture("videos/video_540p.mp4") # cv2.VideoCapture(0) for a webcam
 cap_fps = cap.get(cv2.CAP_PROP_FPS)
-print(cap_fps)
-#delay = int(1000 / cap_fps)
 
 frame_number = 0
 start_time_video = start_time_frame = time.time()
@@ -67,7 +62,7 @@ with ObjectDetector.create_from_options(options) as detector:
             cv2.imshow("Video", annotated_frame)
             
             # Check if the user has pressed the `q` key, if yes then close the program. 
-            if cv2.waitKey(1) & 0xFF == ord('q'): # cv2.waitkey(delay)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         else:
             break

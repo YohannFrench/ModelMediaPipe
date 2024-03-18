@@ -38,4 +38,3 @@ quantization_config = quantization.QuantizationConfig.for_int8(representative_da
 
 model.export_model(model_name="default_model.tflite")
 model.export_model(model_name='model_int8.tflite', quantization_config=quantization_config)
-
