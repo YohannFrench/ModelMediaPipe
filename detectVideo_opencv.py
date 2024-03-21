@@ -28,11 +28,11 @@ ObjectDetectorOptions = vision.ObjectDetectorOptions
 VisionRunningMode = vision.RunningMode
 
 options = ObjectDetectorOptions(
-    base_options=BaseOptions(model_asset_path='exported_model_v2_i320/model_int8.tflite'),
+    base_options=BaseOptions(model_asset_path='exported_model/model_int8.tflite'),
     score_threshold=0.35,
     running_mode=VisionRunningMode.VIDEO)
 
-cap = cv2.VideoCapture("videos/video (540p).mp4")
+cap = cv2.VideoCapture("videos/video (540p)(1).mp4")
 cap_fps = cap.get(cv2.CAP_PROP_FPS)
 print(cap_fps)
 

@@ -23,7 +23,7 @@ print("test_data_size: ", test_data.size)
 
 spec = object_detector.SupportedModels.MOBILENET_V2
 #hparams = object_detector.HParams(epochs=15, batch_size=32, cosine_decay_alpha=0.03, cosine_decay_epochs=6,export_dir='exported_model')
-hparams = object_detector.HParams(epochs=15, batch_size=16, export_dir='exported_model_v2')
+hparams = object_detector.HParams(epochs=15, batch_size=16, export_dir='exported_model')
 options = object_detector.ObjectDetectorOptions(supported_model=spec, hparams=hparams)
 
 model = object_detector.ObjectDetector.create(
