@@ -32,7 +32,7 @@ options = vision.ObjectDetectorOptions(
 cap = cv2.VideoCapture("videos/video_540p.mp4") # cv2.VideoCapture(0) for a webcam
 cap_fps = cap.get(cv2.CAP_PROP_FPS)
 
-frame_number = 0
+frame_number = 1
 start_time_video = start_time_frame = time.time()
 
 with ObjectDetector.create_from_options(options) as detector: 
@@ -40,7 +40,6 @@ with ObjectDetector.create_from_options(options) as detector:
         success, frame = cap.read()
 
         if success:
-            frame_number+=1
             # Calculate the timestamp of the current frame in milliseconds
             frame_timestamp_ms = int(1000 * frame_number / cap_fps)
 
@@ -56,7 +55,7 @@ with ObjectDetector.create_from_options(options) as detector:
             fps = int(1 / (end_time_frame - start_time_frame))
             start_time_frame = end_time_frame
             cv2.putText(annotated_frame, str(fps), (7, 45), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
-            #print(detection_result)
+            print(detection_result)
 
             # Display the frame on the screen
             cv2.imshow("Video", annotated_frame)
@@ -64,12 +63,14 @@ with ObjectDetector.create_from_options(options) as detector:
             # Check if the user has pressed the `q` key, if yes then close the program. 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
+
+            frame_number+=1
         else:
             break
 
 end_time_video = time.time()
-overall = end_time_video - start_time_video
-avg_fps = frame_number / overall
+overall_time = end_time_video - start_time_video
+avg_fps = frame_number / overall_time
 print(f"Average FPS: {avg_fps}")
 
 # Release the VideoCapture object
