@@ -10,7 +10,7 @@
             images
             labels.json
 
-
+# Objet DetectionResult
     DetectionResult(
     detections=[
             Detection(
