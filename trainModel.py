@@ -5,9 +5,9 @@ from mediapipe_model_maker import object_detector
 from mediapipe_model_maker import quantization
 
 
-train_dataset_path = "dataset_persons3/train"
-validation_dataset_path = "dataset_persons3/valid"
-test_dataset_path = "dataset_persons3/test"
+train_dataset_path = "dataset_persons/train"
+validation_dataset_path = "dataset_persons/valid"
+test_dataset_path = "dataset_persons/test"
 
 with open(os.path.join(train_dataset_path, "labels.json"), "r") as f:
     labels_json = json.load(f)
@@ -22,7 +22,6 @@ print("validation_data size: ", validation_data.size)
 print("test_data_size: ", test_data.size)
 
 spec = object_detector.SupportedModels.MOBILENET_V2
-#hparams = object_detector.HParams(epochs=15, batch_size=32, cosine_decay_alpha=0.03, cosine_decay_epochs=6,export_dir='exported_model')
 hparams = object_detector.HParams(epochs=15, batch_size=16, export_dir='exported_model')
 options = object_detector.ObjectDetectorOptions(supported_model=spec, hparams=hparams)
 
@@ -31,11 +30,12 @@ model = object_detector.ObjectDetector.create(
     validation_data=validation_data,
     options=options)
 
-loss, coco_metrics = model.evaluate(validation_data)
+loss, coco_metrics = model.evaluate(validation_data, batch_size=1)
 print(f"Validation loss: {loss}")
 print(f"Validation coco metrics: {coco_metrics}")
 
-# Application of post-training quantization to reduce model size and improve inference speed for smaller devices
+# Application of post-training quantization to reduce model size 
+# and improve inference speed for smaller devices
 quantization_config = quantization.QuantizationConfig.for_int8(representative_data=test_data)
 
 model.export_model(model_name="default_model.tflite")
